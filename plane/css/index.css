@@ -1,0 +1,140 @@
+.hide {
+  display: none;
+}
+.abs {
+  position: absolute;
+}
+.main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.main .game_close {
+  top: 0.5rem;
+  right: 0.2rem;
+}
+.main #game {
+  width: 100%;
+  height: 100%;
+}
+.main .home {
+  width: 100%;
+  height: 100%;
+}
+.main .home .bg {
+  width: 100%;
+  height: 100%;
+}
+.main .home .btn1 {
+  top: 10.5rem;
+  left: 0.5rem;
+}
+.main .home .btn2 {
+  top: 10.5rem;
+  right: 0.5rem;
+}
+.main .home .btn3 {
+  top: 11.6rem;
+  left: 0.5rem;
+}
+.main .home .btn4 {
+  top: 11.6rem;
+  right: 0.5rem;
+}
+.main .gz_box {
+  width: 100%;
+  height: 100%;
+}
+.main .gz_box .gz {
+  width: 100%;
+  height: 100%;
+}
+.main .gz_box .close {
+  top: 0.5rem;
+  right: 0.2rem;
+}
+.main .phb_box {
+  width: 100%;
+  height: 100%;
+}
+.main .phb_box .phb {
+  width: 100%;
+  height: 100%;
+}
+.main .phb_box .back {
+  top: 0.5rem;
+  right: 0.2rem;
+}
+.main .phb_box .swiper_box {
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: calc(50% - 3.5rem);
+  width: 5rem;
+  height: 6rem;
+  overflow: hidden;
+}
+.main .phb_box .swiper_box .item {
+  width: 5rem;
+  height: 1rem;
+  position: relative;
+  margin-bottom: 5px;
+}
+.main .phb_box .swiper_box .item .headimg {
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  left: 0.1rem;
+}
+.main .phb_box .swiper_box .item .name {
+  height: 1rem;
+  width: 1rem;
+  left: 1.5rem;
+  text-align: center;
+  line-height: 1rem;
+  color: #fff;
+  overflow: hidden;
+}
+.main .phb_box .swiper_box .item .score {
+  height: 1rem;
+  width: 1.8rem;
+  left: 3rem;
+  line-height: 1rem;
+  color: #fff;
+  overflow: hidden;
+}
+.main .prise_box {
+  width: 100%;
+  height: 100%;
+}
+.main .prise_box .prise_bg {
+  width: 100%;
+  height: 100%;
+}
+.main .prise_box .back_p {
+  top: 0.5rem;
+  right: 0.2rem;
+}
+.main .prise_box h2 {
+  color: red;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  top: 40%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+.main .share {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.main .share h2 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: red;
+  font-size: 0.6rem;
+}
+/*# sourceMappingURL=./index.css.map */

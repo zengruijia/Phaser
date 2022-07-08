@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="format-detection" content="email=no" />
+		<meta charset="utf-8" />
+		<title>飞机大战</title>
+		<link rel="stylesheet" href="./css/index.css" />
+		<!-- loading样式 -->
+		<link href="//cdn.pannacloud.com/css/panna_com.1.0.3.css" rel="stylesheet" />
+		<!-- jquery -->
+		<script src="//cdn.pannacloud.com/lib/jquery/3.6.0/jquery.min.js"></script>
+		<!-- 预加载js -->
+		<script src="//cdn.pannacloud.com/js/preloadjs.js"></script>
+		<script src="//cdn.pannacloud.com/js/soundjs.js"></script>
+		<!-- 微信js  -->
+		<script src="//cdn.pannacloud.com/js/pn_com.js"></script>
+		<!-- 弹出层js -->
+		<link href="//cdn.pannacloud.com/css/popup.css" rel="stylesheet" />
+		<script src="//cdn.pannacloud.com/js/popup.js"></script>
+		<!-- 滚动列表 -->
+		<script src="//cdn.pannacloud.com/lib/better-scroll/2.4.2/better-scroll.min.js"></script>
+		<!-- 分享js -->
+		<script src="//res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+		<script src="//cdn.pannacloud.com/js/share-wx.js"></script>
+		<!-- 游戏库 -->
+		<script type="text/javascript" src="./js/phaser.min.js"></script>
+
+		<script>
+			Share.hideCopyUrl();
+			Share.shareOption({
+				link: 'https://wx.pannacloud.com/2021/ZRJ_phaser/plane/',
+				pic: 'https://wx.pannacloud.com/2021/ZRJ_phaser/plane/assets/logo.jpg',
+				title: '飞机大战',
+				desc: '10000分才是王者',
+				success: function () {
+					$('.share').hide();
+					if (game.playerLife == 1) {
+						game.state.start('play');
+						game.playerLife = 0;
+					} else if (game.playerLife == 0) {
+						popup.show({
+							type: 'toast', // 弹出类型'loading','toast','alert','confirm'
+							tip: '一场只可通过分享复活一次', //  提示内容
+							icon: 'warn',
+						});
+						game.state.start('over');
+					}
+				},
+			});
+		</script>
+	</head>
+	<body>
+		<!-- 进度条样式 -->
+		<div class="loading loading-panna" id="loading">
+			<div class="loadingArea">
+				<img class="loadingSvg" src="//cdn.pannacloud.com/img/loading/loading21.svg" />
+				<div class="loading-percent">0%</div>
+			</div>
+		</div>
+
+		<!-- //首页 -->
+		<div class="main">
+			<div id="game" class="abs"></div>
+			<img class="game_close preload abs" data-src="./assets/close.png" alt="" />
+			<div class="home abs">
+				<img class="abs bg" src="./assets/background.png" alt="" />
+				<img class="abs btn1 preload" data-src="./assets/btn1.png" alt="" />
+				<img class="abs btn2 preload" data-src="./assets/btn2.png" alt="" />
+				<img class="abs btn3 preload" data-src="./assets/btn3.png" alt="" />
+				<img class="abs btn4 preload" data-src="./assets/btn4.png" alt="" />
+			</div>
+			<div class="gz_box abs hide">
+				<img class="abs gz preload" data-src="./assets/gz.png" alt="" />
+				<img class="abs close preload" data-src="./assets/close.png" alt="" />
+			</div>
+			<div class="phb_box abs hide">
+				<img class="abs preload phb" data-src="./assets/phb.png" alt="" />
+				<img class="abs preload back" data-src="./assets/close.png" alt="" />
+				<div class="swiper_box abs">
+					<div class="content abs"></div>
+				</div>
+			</div>
+			<div class="prise_box abs hide">
+				<img class="prise_bg abs preload" data-src="./assets/prise_box.png" alt="" />
+				<img class="abs preload back_p" data-src="./assets/close.png" alt="" />
+				<h2 class="abs prise">恭喜你<br />获得奖励1</h2>
+			</div>
+			<div class="share abs hide">
+				<h2>点击右上角分享好友，每场可复活一次</h2>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="./js/index.js"></script>
+		<script src="//cdn.pannacloud.com/js/pn_loader.js"></script>
+		<script>
+			window.onload = function () {
+				$.comFunc().config({
+					prevent: true, //是否阻止微信端页面整体下拉
+					// arrow: true, // 是否显示滑动指示箭头
+					test: true, //是否显示测试文字
+					screenLock: true, //是否显示横屏锁定提示
+					//screenLockUrl:"img/bg2.jpg",   //锁定提示图片
+					// music:'mp3/music.mp3',   // 播放音乐
+					// arrowImgUrl: "", // 不定义图片路径，则使用默认图片
+					// musicImgUrl:["images/m-open.png","images/m-close.png"]  // 同上 1播放时图片 2关闭时图片
+				});
+			};
+
+			var sourceData = [
+				{
+					id: 'bgm',
+					src: './bgm/bgm.mp3',
+				},
+			];
+
+			//模拟后端数据
+			var group = [
+				{ headimg: './assets/logo.jpg', username: 'A', score: 10000 },
+				{ headimg: './assets/enemy1.png', username: 'B', score: 9000 },
+				{ headimg: './assets/enemy2.png', username: 'C', score: 8000 },
+				{ headimg: './assets/enemy3.png', username: 'D', score: 6000 },
+				{ headimg: './assets/boss1.png', username: 'E', score: 5000 },
+				{ headimg: './assets/boss2.png', username: 'F', score: 4000 },
+				{ headimg: './assets/boss3.png', username: 'G', score: 4000 },
+			];
+
+			$(function () {
+				$.bugFixed();
+				$.winInit(750);
+
+				var template = '';
+				var scroll = BetterScroll.createBScroll('.swiper_box', {
+					scrollY: true, //竖向滚动
+					scrollX: false, //横向滚动
+					bounce: false,
+				});
+
+				$('.btn1').on('click', function () {
+					$('.home').fadeOut(500);
+				});
+
+				$('.btn2').on('click', function () {
+					$('.gz_box').fadeIn(500);
+				});
+
+				$('.btn3').on('click', function () {
+					$('.phb_box').fadeIn(500);
+
+					for (let i = 0; i < group.length; i++) {
+						let headimg = group[i].headimg;
+						let name = group[i].username;
+						let score = group[i].score;
+						template += `
+              <div class="item">
+							<img class="headimg abs" src=${headimg} alt="" />
+							<span class="name abs">${name}</span>
+							<span class="score abs">分数：${score}</span>
+						  </div>
+            `;
+						$('.content').html(template);
+						console.log('template', template);
+					}
+					scroll.refresh(); //滚动初始化
+				});
+
+				$('.btn4').on('click', function () {
+					$('.prise_box').fadeIn(500);
+					console.log('score', game.score);
+					if (game.score < 5000) {
+						$('.prise_box .prise').html('分数未达标');
+					} else if (game.score >= 5000 && game.score < 7000) {
+						$('.prise_box .prise').html('恭喜你<br />获得奖励1');
+					} else if (game.score >= 7000 && game.score < 10000) {
+						$('.prise_box .prise').html('恭喜你<br />获得奖励2');
+					} else if (game.score >= 10000) {
+						$('.prise_box .prise').html('恭喜你<br />获得奖励3');
+					}
+				});
+
+				$('.close').on('click', function () {
+					$('.gz_box').fadeOut(500);
+				});
+
+				$('.back').on('click', function () {
+					$('.phb_box').fadeOut(500);
+				});
+
+				$('.back_p').on('click', function () {
+					$('.prise_box').fadeOut(500);
+				});
+
+				$('.game_close').on('click', function () {
+					$('.home').fadeIn(500);
+				});
+
+				var loader = $.loader({
+					staticResource: sourceData,
+					bgmCtrl: false,
+					//  bgmCtrlIcon: [
+					//     {src: 'img/music_on.png', id: 'music-open'},
+					//     {src: 'img/music_off.png', id: 'music-close'}
+					//     ],
+					handleLoading(evt) {
+						var cProgress = Math.floor(evt.loaded * 100);
+						$('.loading-percent').html(cProgress + '%');
+					},
+					handleFileLoaded(event) {},
+					handleComplete() {
+						$('.loading').fadeOut(500, function () {});
+					},
+				});
+			});
+		</script>
+	</body>
+</html>
